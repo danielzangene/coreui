@@ -42,7 +42,7 @@ class FuseAuthorization extends Component {
 
     const matched = matchedRoutes ? matchedRoutes[0] : false;
     return {
-      accessGranted: matched ? FuseUtils.hasPermission(matched.route.auth, userRole) : true,
+      accessGranted: /*matched ? FuseUtils.hasPermission(matched.route.auth, userRole) :*/ true,
     };
   }
 

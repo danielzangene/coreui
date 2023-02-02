@@ -17,7 +17,7 @@ function SignOutPage() {
           <img className="w-48 mx-auto" src="assets/images/logo/logo.svg" alt="logo" />
 
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight text-center">
-            You have signed out!
+            خوش آمدید!
           </Typography>
         </div>
       </Paper>
