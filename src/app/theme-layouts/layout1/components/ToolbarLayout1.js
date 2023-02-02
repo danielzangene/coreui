@@ -11,7 +11,7 @@ import AdjustFontSize from '../../shared-components/AdjustFontSize';
 import FullScreenToggle from '../../shared-components/FullScreenToggle';
 import LanguageSwitcher from '../../shared-components/LanguageSwitcher';
 import NotificationPanelToggleButton from '../../shared-components/notificationPanel/NotificationPanelToggleButton';
-import NavigationShortcuts from '../../shared-components/NavigationShortcuts';
+// import NavigationShortcuts from '../../shared-components/NavigationShortcuts';
 import NavigationSearch from '../../shared-components/NavigationSearch';
 import NavbarToggleButton from '../../shared-components/NavbarToggleButton';
 import UserMenu from '../../shared-components/UserMenu';
@@ -57,13 +57,15 @@ function ToolbarLayout1(props) {
                 </Hidden>
               </>
             )}
-
+{/*
             <Hidden lgDown>
               <NavigationShortcuts />
             </Hidden>
+*/}
           </div>
 
           <div className="flex items-center px-8 h-full overflow-x-auto">
+{/*
             <LanguageSwitcher />
 
             <AdjustFontSize />
@@ -80,6 +82,7 @@ function ToolbarLayout1(props) {
 
             <NotificationPanelToggleButton />
 
+*/}
             <UserMenu />
           </div>
 

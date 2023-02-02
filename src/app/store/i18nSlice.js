@@ -30,6 +30,7 @@ const i18nSlice = createSlice({
       { id: 'en', title: 'English', flag: 'US' },
       { id: 'tr', title: 'Turkish', flag: 'TR' },
       { id: 'ar', title: 'Arabic', flag: 'SA' },
+      { id: 'fa', title: 'فارسی', flag: 'SA' },
     ],
   },
   reducers: {

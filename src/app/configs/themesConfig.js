@@ -15,6 +15,12 @@ export const darkPaletteText = {
 
 const themesConfig = {
   default: {
+    typography: {
+      fontFamily: [
+        'IRANSansX',
+        'sans-serif'
+      ].join(','),
+    },
     palette: {
       mode: 'light',
       divider: '#e2e8f0',
