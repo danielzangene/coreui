@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react'
 import netConfig from "./netConfig";
+import {getAccessToken, logoutHandler} from "./TokenHandler";
 // import {getAccessToken, logoutHandler} from '@utils'
 
 const useFetch = (uri, requestMethod, requestBody) => {
@@ -10,7 +11,7 @@ const useFetch = (uri, requestMethod, requestBody) => {
         const initRequest = {
             headers: {
                 "Content-Type": "application/json",
-                Authorization: ""
+                Authorization: getAccessToken()
             },
             method: requestMethod,
             body: JSON.stringify(requestBody),
@@ -20,23 +21,21 @@ const useFetch = (uri, requestMethod, requestBody) => {
             fetch(netConfig.baseUrl + uri, initRequest)
                 .then(res => {
                     if (res.ok) return res.json()
-                    if (res.status === netConfig.okStatus) return res.json()
+                    if (res.status === netConfig.unauthorizedStatus) return res.json()
                     throw new Error('can not connect')
                 })
-            /*
-                .then(data => {
-                    console.log(data)
-                    if (data.code === netConfig.unauthorizedStatus) {
-                        logoutHandler(data.message)
+                .then(d => {
+                    console.log(d)
+                    if (d.code === netConfig.unauthorizedStatus) {
+                        logoutHandler(d.message)
                     } else {
-                        setData(data)
+                        setData(d)
                     }
                 })
                 .catch((error) => {
                 console.log(error)
-                return {code: 500, message:'خطا در فراخوانی سرویس، خواهشمندیم دوباره تلاش کنید.'}
+                setData( {code: 500, message:'خطا در فراخوانی سرویس، خواهشمندیم دوباره تلاش کنید.'})
                 })
-            */
         }, 3000)
         return () => abortCont.abort()
     }, [uri])

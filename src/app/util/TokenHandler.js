@@ -18,7 +18,6 @@ export const getAccessToken = () => {
 }
 
 export const logoutHandler = (message) => {
-  message = message ? `?message=${message}` : ''
   localStorage.removeItem('accessToken')
-  location.href = `/login${message}`
+  location.href = `/sign-in`
 }
