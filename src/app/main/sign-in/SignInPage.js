@@ -13,22 +13,24 @@ import {useEffect, useState} from 'react';
 import {CircularProgress} from "@mui/material";
 import UseFetchUrl from "../../util/UseFetchUrl";
 import netConfig from "../../util/netConfig";
-import {isUserLoggedIn} from "../../util/TokenHandler";
 import {useDispatch} from "react-redux";
 
 
 const schema = yup.object().shape({
     email: yup.string().required('لطفا نام کاربری را وارد کنید'),
-    password: yup.string().required('لطفا رمزعبور را وارد کتید.')
+    password: yup.string().required('لطفا رمزعبور را وارد کتید.'),
+    captcha: yup.string().required('لطفا عبارت مقابل را وارد کنید.')
 });
 
 const defaultValues = {
     email: '',
     password: '',
+    captcha: '',
 };
 
 function SignInPage() {
     const [isPending, setIsPending] = useState(false)
+    const [captchaImage, setCaptchaImage] = useState(null)
     const {control, formState, handleSubmit, setError, setValue} = useForm({
         mode: 'onChange',
         defaultValues,
@@ -40,13 +42,28 @@ function SignInPage() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (isUserLoggedIn()) console.log("testestset")
-    }, [isPending]);
+        getCaptcha()
+    }, []);
 
-    async function onSubmit({email, password}) {
+    async function getCaptcha() {
+        const data = await UseFetchUrl("/api/auth/captcha", "PATCH", null)
+        if (data.code === netConfig.okStatus) {
+            setCaptchaImage(data.resultData)
+            console.log(data)
+        }
+    }
+
+    async function onSubmit({email, password, captcha}) {
         setIsPending(true)
-        const data = await UseFetchUrl("/api/auth/signin", "POST", {username: email, password})
+        console.log({username: email, password, captcha, captchaId: captchaImage.id})
+        const data = await UseFetchUrl("/api/auth/signin", "POST", {
+            username: email,
+            password,
+            captcha,
+            captchaId: captchaImage.id
+        })
         if (data.code !== netConfig.okStatus) {
+            if (data.code === 1000004) getCaptcha()
             dispatch(
                 showMessage({
                     message: data.message,
@@ -119,17 +136,41 @@ function SignInPage() {
                                 />
                             )}
                         />
+                        <Box sx={{alignItems: 'flex-start'}}
+                             className="flex flex-col sm:flex-row items-center justify-center justify-between">
+                            <Controller
+                                name="captcha"
+                                control={control}
+                                render={({field}) => (
+                                    <TextField
+                                        {...field}
+                                        className="w-1/2"
+                                        label=""
+                                        type="text"
+                                        error={!!errors.captcha}
+                                        helperText={errors?.captcha?.message}
+                                        variant="outlined"
+                                        required
+                                    />
+                                )}
+                            />
+                            {captchaImage && <img className='w-1/2 pr-20 cursor-pointer'
+                                                  src={`data:image/jpg;base64, ${captchaImage.captcha}`}
+                                                  onClick={getCaptcha}/>}
+                        </Box>
 
+{/*
                         <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between">
-                            <Link className="text-md font-medium" to="/pages/auth/forgot-password">
+                            <Link className="text-md font-medium mt-24" to="/pages/auth/forgot-password">
                                 رمزعبور خود را فراموش کرده اید؟
                             </Link>
                         </div>
+*/}
 
                         <Button
                             variant="contained"
                             color="secondary"
-                            className=" w-full mt-16"
+                            className=" w-full mt-32"
                             aria-label="Sign in"
                             disabled={!isPending && (_.isEmpty(dirtyFields) || !isValid)}
                             type="submit"
