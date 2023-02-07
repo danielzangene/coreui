@@ -3,7 +3,6 @@ import {Controller, useForm} from 'react-hook-form';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import {Link} from 'react-router-dom'
 import {showMessage} from 'app/store/fuse/messageSlice';
 import * as yup from 'yup';
 import _ from '@lodash';
@@ -38,12 +37,27 @@ function SignInPage() {
     });
 
     const {isValid, dirtyFields, errors} = formState;
+    const queryMessage = new URLSearchParams(window.location.search).get("message")
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         getCaptcha()
     }, []);
+
+    useEffect(() => {
+        if (queryMessage)
+            dispatch(
+                showMessage({
+                    message: queryMessage,
+                    autoHideDuration: 6000,
+                    anchorOrigin: {
+                        vertical: 'bottom',
+                        horizontal: 'right'
+                    },
+                    variant: 'error'
+                }))
+    }, [queryMessage]);
 
     async function getCaptcha() {
         const data = await UseFetchUrl("/api/auth/captcha", "PATCH", null)
@@ -77,7 +91,7 @@ function SignInPage() {
 
         } else if (data) {
             if (data.resultData) localStorage.setItem("accessToken", data.resultData.token)
-            location.href = '/dashboard'
+            window.location.replace('/dashboard')
         }
         setIsPending(false)
 

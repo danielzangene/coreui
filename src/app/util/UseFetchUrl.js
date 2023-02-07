@@ -2,7 +2,7 @@
 import netConfig from "./netConfig";
 import {getAccessToken, logoutHandler} from "./TokenHandler";
 
-const UseFetchUrl = async (uri, requestMethod, requestBody) => {
+async function UseFetchUrl  (uri, requestMethod, requestBody) {
 
     const initRequest = {
         headers: {
