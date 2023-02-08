@@ -77,7 +77,7 @@ function SignInPage() {
             captchaId: captchaImage.id
         })
         if (data.code !== netConfig.okStatus) {
-            if (data.code === 1000004) getCaptcha()
+            if (data.code === 1000004 || data.code === 1000005) getCaptcha()
             dispatch(
                 showMessage({
                     message: data.message,
