@@ -64,6 +64,18 @@ function SignInPage() {
         if (data.code === netConfig.okStatus) {
             setCaptchaImage(data.resultData)
             console.log(data)
+        } else {
+            dispatch(
+                showMessage({
+                    message: data.message,
+                    autoHideDuration: 6000,
+                    anchorOrigin: {
+                        vertical: 'bottom',
+                        horizontal: 'right'
+                    },
+                    variant: 'error'
+                }))
+
         }
     }
 
