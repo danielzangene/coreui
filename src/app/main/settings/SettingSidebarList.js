@@ -56,7 +56,7 @@ function SettingSidebarList(props) {
                                 key={item.id}
                             >
                                 <FuseSvgIcon key={item.id} className="list-item-icon" color="disabled">
-                                    heroicons-outline:pencil-alt
+                                    {item.icon}
                                 </FuseSvgIcon>
                                 <ListItemText className="truncate" primary={item.name} disableTypography/>
                             </StyledListItem>
