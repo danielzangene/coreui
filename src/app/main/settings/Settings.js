@@ -22,8 +22,8 @@ function Settings(props) {
     const params = useParams();
 
     const settingList = [
-        {id: "params", name: "مقادیر ثابت", page: <ParamsPage />, icon: 'heroicons-outline:pencil-alt'},
-        {id: "theme", name: "تم", page: <ThemePage />, icon: 'heroicons-outline:pencil-alt'}
+        {id: "params", name: "مقادیر ثابت", page: <ParamsPage key='params' />, icon: 'heroicons-outline:pencil-alt'},
+        {id: "theme", name: "تم", page: <ThemePage key='theme'/>, icon: 'heroicons-outline:pencil-alt'}
     ]
     useEffect(() => {
     }, [settingList]);

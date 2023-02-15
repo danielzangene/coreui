@@ -47,7 +47,7 @@ function ParamsPageDrawer(props) {
     return !data ? (
         <Backdrop
             sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
-            open={!data}
+            open={!Boolean(data)}
         >
             <CircularProgress color="inherit"/>
         </Backdrop>
@@ -55,7 +55,7 @@ function ParamsPageDrawer(props) {
         <div className="w-11/12 table-responsive mt-24" id='drawer-container'>
             <Drawer
                 anchor='right'
-                open={anchor}
+                open={Boolean(anchor)}
                 onClose={() => {
                     folderSetter(null)
                     setAnchor(false)
@@ -112,7 +112,7 @@ function ParamsPageDrawer(props) {
                                     <TableCell component="th">
                                         <Typography className="" color="text.secondary "
                                                     onClick={() => setNewFolder(item.id)}>
-                                            {item.code}
+                                            {item.code}{/*<span>{item.value}</span>*/}
                                         </Typography>
                                     </TableCell>
                                     <TableCell component="th" width={1}>
