@@ -24,6 +24,7 @@ function UserMenu(props) {
     };
 
     useEffect(() => {
+        console.log(getUserData())
         setUser(getUserData())
     }, []);
 
@@ -39,7 +40,7 @@ function UserMenu(props) {
                         {user && user.name}
                     </Typography>
                     <Typography className="text-11 font-medium capitalize" color="text.secondary">
-                        {user && user.role}
+                        {user && user.role.name}
                     </Typography>
                 </div>
 
